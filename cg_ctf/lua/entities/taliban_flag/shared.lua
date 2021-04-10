@@ -1,8 +1,6 @@
 ENT.Type = "anim"'
 ENT.Base = "base_gmodentity"
 
-ENT.PrintName = "Flag Base"
+ENT.PrintName = "Taliban Flag"
 
 ENT.Spawnable = true
-
-ENT.Editable = true

@@ -12,18 +12,23 @@ SWEP.SlotPos        = 0
 SWEP.Weight         = 5
 SWEP.AutoSwitchTo   = true
 SWEP.AutoSwitchFrom = false
-
 SWEP.Spawnable      = false
 SWEP.AdminSpawnable = true
-
+SWEP.ShowViewModel = false
+SWEP.ShowWorldModel = false
 SWEP.ViewModelFlip  = true
 SWEP.UseHands       = false
 
 SWEP.ViewModelFOV  = 72
-SWEP.ViewModel = "models/ctf/ctf_flag.mdl"
-SWEP.WorldModel = "models/ctf/ctf_flag.mdl"
+SWEP.VElements = {
+	["flag"] = { type = "Model", model = "models/ctf/ctf_flag.mdl", bone = "ValveBiped.Bip01_Spine4", rel = "", pos = Vector(-80, -71.968, -7.316), angle = Angle(-89.943, 0, 0), size = Vector(0.748, 0.748, 0.748), color = Color(255, 255, 255, 255), surpresslightning = true, material = "", skin = 0, bodygroup = {} }
+}
+SWEP.WElements = {
+	["flag"] = { type = "Model", model = "models/ctf/ctf_flag.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(1.917, -5.549, 80), angle = Angle(174.539, 105.589, 0), size = Vector(0.326, 0.326, 0.326), color = Color(255, 255, 255, 255), surpresslightning = true, material = "", skin = 0, bodygroup = {} }
+}
 
-
+SWEP.ViewModel = "models/weapons/c_bugbait.mdl"
+SWEP.WorldModel = "models/weapons/c_bugbait.mdl"
 
 function SWEP:PrimaryAttack()
     -- Checks if we have enough ammo to shoot

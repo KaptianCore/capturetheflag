@@ -2,8 +2,8 @@ AddCSLuaFile()
 
 SWEP.Base         = "weapon_base"
 SWEP.PrintName    = "Taliban Flag SWEP"
-SWEP.Category     = ""
-SWEP.Author       = ""
+SWEP.Category     = "Other"
+SWEP.Author       = "Kaptian Core"
 SWEP.Instructions = [[]]
 
 SWEP.HoldType       = "ar2"

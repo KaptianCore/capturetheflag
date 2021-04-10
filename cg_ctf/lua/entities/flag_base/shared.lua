@@ -5,3 +5,4 @@ ENT.PrintName = "Flag Base"
 
 ENT.Spawnable = true
 
+ENT.Editable = true

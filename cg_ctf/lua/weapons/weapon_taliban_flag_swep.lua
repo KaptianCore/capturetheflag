@@ -36,8 +36,9 @@ SWEP.Secondary.Delay       = 1
 SWEP.AmmoEnt = ""
 
 SWEP.ViewModelFOV  = 72
-SWEP.ViewModel  = ""
-SWEP.WorldModel = ""
+SWEP.ViewModel = "models/ctf/ctf_flag.mdl"
+SWEP.WorldModel = "models/ctf/ctf_flag.mdl"
+
 
 
 function SWEP:PrimaryAttack()

@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 SWEP.Base         = "weapon_base"
-SWEP.PrintName    = ""
+SWEP.PrintName    = "Taliban Flag SWEP"
 SWEP.Category     = ""
 SWEP.Author       = ""
 SWEP.Instructions = [[]]
@@ -13,27 +13,11 @@ SWEP.Weight         = 5
 SWEP.AutoSwitchTo   = true
 SWEP.AutoSwitchFrom = false
 
-SWEP.Spawnable      = true
+SWEP.Spawnable      = false
 SWEP.AdminSpawnable = true
 
 SWEP.ViewModelFlip  = true
 SWEP.UseHands       = false
-SWEP.DrawCrosshair  = true
-
-SWEP.Primary.Delay       = 0.08
-SWEP.Primary.Recoil      = 1.9
-SWEP.Primary.Automatic   = true
-SWEP.Primary.Damage      = 20
-SWEP.Primary.Cone        = 0.025
-SWEP.Primary.Ammo        = "smg1"
-SWEP.Primary.ClipSize    = 45
-SWEP.Primary.ClipMax     = 90
-SWEP.Primary.DefaultClip = 45
-SWEP.Primary.Sound       = Sound("Weapon_AK47.Single")
-
-SWEP.Secondary.Delay       = 1
-
-SWEP.AmmoEnt = ""
 
 SWEP.ViewModelFOV  = 72
 SWEP.ViewModel = "models/ctf/ctf_flag.mdl"

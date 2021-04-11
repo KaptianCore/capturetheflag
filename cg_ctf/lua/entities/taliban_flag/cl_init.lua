@@ -1,7 +1,7 @@
-include("shared.lua")
+include("entities/taliban_flag/shared.lua")
 
 function ENT:Draw()
-    self:DrawModel("models/ctf/ctf_flag.mdl")
+    self:DrawModel()
     self:SetSkin(2)
 end
 

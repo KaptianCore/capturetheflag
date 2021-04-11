@@ -21,8 +21,8 @@ function ENT:Touch(ply)
     if(!ply:IsPlayer) then 
         return
     end
-    local player_faction = ply:GAMEMODE.GetRegiment():GetAbsoluteParent()
-    if (GAMEMODE.IsAlly(1, player_faction)) then 
+    local player_faction = GAMEMODE:GetRegiment(ply):GetAbsoluteParent()
+    if (GAMEMODE:IsAlly(1, player_faction)) then 
         -- change body group of the entity, give the swep to ply, also announce the person has taken the team's flag
     end
 else

@@ -6,3 +6,9 @@ function ENT:Draw()
 end
 
 
+
+local function RecieveTakenFlag()
+    chat.AddText(unpack(net.ReadTable()))
+end
+
+net.Receive("TakenFlag", RecieveTakenFlag)

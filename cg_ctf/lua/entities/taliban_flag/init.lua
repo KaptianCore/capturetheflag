@@ -1,6 +1,8 @@
+util.AddNetworkString("TakenFlag")
 AddCSLuaFile("entities/taliban_flag/cl_init.lua")
 AddCSLuaFile("entities/taliban_flag/shared.lua")
 include("entities/taliban_flag/shared.lua")
+
 
 function ENT:SpawnFunction( ply, trace )
     local ent = ents.Create( "taliban_flag" )
@@ -24,10 +26,25 @@ function ENT:Initialize()
     -- add the options menu thing to it (look at notepad for it ) + team as 1 or 2 and set the skin as 1 or 2 depending on the team
 end
 
+local function SendTakenFlag(msg, ply)
+    net.Start("TakenFlag")
+    net.WriteTable(msg)
+    if ply then 
+        net.Send(ply)
+    else
+        net.Broadcast()
+    end
+end
+
 function ENT:Use(ply)
+    self:SetUseType(SIMPLE_USE)
     if (not ply:IsPlayer()) then 
         return
     end
+    -- local player_faction = GAMEMODE:GetRegiment(ply):GetAbsoluteParent() -- Uncommented until done (since need GM)
+    -- if (GAMEMODE:IsAlly(1, player_faction)) then -- Uncommented until done (since need GM)
+    local alliance = true -- Temp value since can't test without gamemode
+    local player_faction = 1
     local fac_colours = {
         [0]    = Color(255, 255, 255), -- Neutral :P
         [1]    = Color(3, 3, 252),     -- US 
@@ -37,18 +54,12 @@ function ENT:Use(ply)
         [103]  = Color(227,254,0),     -- PLA
         [104]  = Color(255,88,0),      -- AUS
     }
-    -- local player_faction = GAMEMODE:GetRegiment(ply):GetAbsoluteParent() -- Uncommented until done (since need GM)
-    -- if (GAMEMODE:IsAlly(1, player_faction)) then -- Uncommented until done (since need GM)
-    local alliance = true -- Temp value since can't test without gamemode
-    local player_faction = 1
+    local msg = {Color(14,98,224 ), "[CTF] ", fac_colours[player_faction], ply:Name(), fac_colours[0], " has taken the ", fac_colours[2], "Taliban ", fac_colours[0], "Flag"}
     if(alliance == true) then
-        for k, v in pairs(player.GetAll()) do 
-            chat.AddText(Color( 14,98,224 ), "[CTF] ", fac_colours[player_faction], ply:Name(), fac_colours[0], "has taken the", fac_colours[2], "Taliban", fac_colours[0], "Flag")
-        end 
-    end
+        SendTakenFlag(msg, ply)
         -- change body group of the entity, give the swep to ply, also announce the person has taken the team's flag 
-    else
+    end
+    -- else statement
     -- chat message saying you can't take your own flag like how intel does it
     -- this is where the swep will be given as well as checks to see they are either allied to the team, also checking its a player, defining the player that HasFlag or I can just check when they are returning if they have the enemy swep
-    end
 end

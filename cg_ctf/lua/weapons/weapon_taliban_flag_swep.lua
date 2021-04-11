@@ -5,7 +5,7 @@ SWEP.PrintName    = "Taliban Flag SWEP"
 SWEP.Category     = "Other"
 SWEP.Author       = "Kaptian Core"
 SWEP.Contact      = ""
-SWEP.Instructions = [[]]
+SWEP.Instructions = [[Return This Flag To Your Team's Flag Then Click E To Return Or Capture The Flag!]]
 
 SWEP.HoldType = "melee2"
 SWEP.Slot           = 1
@@ -47,26 +47,19 @@ function SWEP:Initialize()
     self:SetWeaponHoldType(self.HoldType)
 	end
 
-	// other initialize code goes here
-
 	if CLIENT then
-	
-		// Create a new table for every weapon instance
+
 		self.VElements = table.FullCopy( self.VElements )
 		self.WElements = table.FullCopy( self.WElements )
 		self.ViewModelBoneMods = table.FullCopy( self.ViewModelBoneMods )
 
-		self:CreateModels(self.VElements) // create viewmodels
-		self:CreateModels(self.WElements) // create worldmodels
-		
-		// init view model bone build function
+		self:CreateModels(self.VElements)
 		if IsValid(self.Owner) then
 			-- local vm = self.Owner:GetViewModel()
 			if IsValid(vm) then
 				self:ResetBonePositions(vm)
 			end
 			
-			// Init viewmodel visibility
 		end
 		
 	end

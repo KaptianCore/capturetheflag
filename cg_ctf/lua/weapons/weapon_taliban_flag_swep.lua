@@ -5,7 +5,7 @@ SWEP.PrintName    = "Taliban Flag SWEP"
 SWEP.Category     = "Other"
 SWEP.Author       = "Kaptian Core"
 SWEP.Contact      = ""
-SWEP.Instructions = [[Return This Flag To Your Team's Flag Then Click E To Return Or Capture The Flag!]]
+SWEP.Instructions = [[]]
 
 SWEP.HoldType = "melee2"
 SWEP.Slot           = 1
@@ -37,7 +37,7 @@ SWEP.WElements = {
 	["flag"] = { type = "Model", model = "models/ctf/ctf_flag.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(1.917, -5.549, 80), angle = Angle(174.539, 105.589, 0), size = Vector(0.326, 0.326, 0.326), color = Color(255, 255, 255, 255), surpresslightning = true, material = "", skin = 2, bodygroup = {} }
 }
 
-SWEP.ViewModel = Model( "models/weapons/c_arms.mdl" )
+SWEP.ViewModel = Model("")
 SWEP.WorldModel = Model("models/weapons/c_bugbait.mdl")
 
 function SWEP:Initialize()
@@ -47,19 +47,26 @@ function SWEP:Initialize()
     self:SetWeaponHoldType(self.HoldType)
 	end
 
-	if CLIENT then
+	// other initialize code goes here
 
+	if CLIENT then
+	
+		// Create a new table for every weapon instance
 		self.VElements = table.FullCopy( self.VElements )
 		self.WElements = table.FullCopy( self.WElements )
 		self.ViewModelBoneMods = table.FullCopy( self.ViewModelBoneMods )
 
-		self:CreateModels(self.VElements)
+		self:CreateModels(self.VElements) // create viewmodels
+		self:CreateModels(self.WElements) // create worldmodels
+		
+		// init view model bone build function
 		if IsValid(self.Owner) then
-			-- local vm = self.Owner:GetViewModel()
+			local vm = self.Owner:GetViewModel()
 			if IsValid(vm) then
 				self:ResetBonePositions(vm)
 			end
 			
+			// Init viewmodel visibility
 		end
 		
 	end
@@ -398,6 +405,9 @@ if CLIENT then
 		if self.ViewModelBoneMods then
 			
 			if (!vm:GetBoneCount()) then return end
+			
+			// !! WORKAROUND !! //
+			// We need to check all model names :/
 			local loopthrough = self.ViewModelBoneMods
 			if (!hasGarryFixedBoneScalingYet) then
 				allbones = {}
@@ -415,12 +425,14 @@ if CLIENT then
 				end
 				
 				loopthrough = allbones
-
+			end
+			// !! ----------- !! //
 			
 			for k, v in pairs( loopthrough ) do
 				local bone = vm:LookupBone(k)
 				if (!bone) then continue end
 				
+				// !! WORKAROUND !! //
 				local s = Vector(v.scale.x,v.scale.y,v.scale.z)
 				local p = Vector(v.pos.x,v.pos.y,v.pos.z)
 				local ms = Vector(1,1,1)
@@ -434,6 +446,8 @@ if CLIENT then
 				end
 				
 				s = s * ms
+				// !! ----------- !! //
+				
 				if vm:GetManipulateBoneScale(bone) != s then
 					vm:ManipulateBoneScale( bone, s )
 				end
@@ -468,7 +482,7 @@ if CLIENT then
 		local res = {}
 		for k, v in pairs( tab ) do
 			if (type(v) == "table") then
-				res[k] = table.FullCopy(v)
+				res[k] = table.FullCopy(v) // recursion ho!
 			elseif (type(v) == "Vector") then
 				res[k] = Vector(v.x, v.y, v.z)
 			elseif (type(v) == "Angle") then

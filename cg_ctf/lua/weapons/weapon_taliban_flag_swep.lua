@@ -398,9 +398,6 @@ if CLIENT then
 		if self.ViewModelBoneMods then
 			
 			if (!vm:GetBoneCount()) then return end
-			
-			// !! WORKAROUND !! //
-			// We need to check all model names :/
 			local loopthrough = self.ViewModelBoneMods
 			if (!hasGarryFixedBoneScalingYet) then
 				allbones = {}
@@ -418,14 +415,12 @@ if CLIENT then
 				end
 				
 				loopthrough = allbones
-			end
-			// !! ----------- !! //
+
 			
 			for k, v in pairs( loopthrough ) do
 				local bone = vm:LookupBone(k)
 				if (!bone) then continue end
 				
-				// !! WORKAROUND !! //
 				local s = Vector(v.scale.x,v.scale.y,v.scale.z)
 				local p = Vector(v.pos.x,v.pos.y,v.pos.z)
 				local ms = Vector(1,1,1)
@@ -439,8 +434,6 @@ if CLIENT then
 				end
 				
 				s = s * ms
-				// !! ----------- !! //
-				
 				if vm:GetManipulateBoneScale(bone) != s then
 					vm:ManipulateBoneScale( bone, s )
 				end
@@ -475,7 +468,7 @@ if CLIENT then
 		local res = {}
 		for k, v in pairs( tab ) do
 			if (type(v) == "table") then
-				res[k] = table.FullCopy(v) // recursion ho!
+				res[k] = table.FullCopy(v)
 			elseif (type(v) == "Vector") then
 				res[k] = Vector(v.x, v.y, v.z)
 			elseif (type(v) == "Angle") then

@@ -61,25 +61,21 @@ function ENT:Use(ply)
         local msg = {Color(14,98,224 ), "[CTF] ",fac_colours[0], " You can't take your own team's flag "}
         SendTakenFlag(msg, ply)
     end
-elseif(TakenFlag ==  true) then
-        local msg = {Color(14,98,224 ), "[CTF] ",fac_colours[0], " There is no flag to be taken? "}
-        SendTakenFlag(msg, ply)
+    elseif(TakenFlag ==  true) then -- Need to maybe check this to check the active body groups on the entity?
         return
-    end
-
+    elseif(alliance == false and TakenFlag == false) then
+    local msg = {Color(14,98,224 ), "[CTF] ", fac_colours[player_faction], ply:Name(), fac_colours[0], " has taken the ", fac_colours[2], "Taliban ", fac_colours[0], "Flag"}
+    ply:Give("weapon_taliban_flag_swep")
+    SendTakenFlag(msg, ply)
+    elseif(alliance == false and TakenFlag == true)
+    local msg = {Color(14,98,224 ), "[CTF] ",fac_colours[0], " There is no flag to be taken? "}
+    SendTakenFlag(msg, ply) 
+end
     -- else statement
     -- chat message saying you can't take your own flag like how intel does it
     -- this is where the swep will be given as well as checks to see they are either allied to the team, also checking its a player, defining the player that HasFlag or I can just check when they are returning if they have the enemy swep
-end
-
-local function TakeFlag()
-    local msg = {Color(14,98,224 ), "[CTF] ", fac_colours[player_faction], ply:Name(), fac_colours[0], " has taken the ", fac_colours[2], "Taliban ", fac_colours[0], "Flag"}
-    if(alliance == true) then
-        SendTakenFlag(msg, ply)
-        -- change body group of the entity, give the swep to ply, also announce the person has taken the team's flag 
-    end
+    -- change body group of the entity, give the swep to ply, also announce the person has taken the team's flag 
     -- The ent use is too generic so will split it up here, will need to add checks like if its the first take and all that in the main func then here will do the body group and chat message
-end
 
 local function ReturnFlag()
     TakenFlag = false

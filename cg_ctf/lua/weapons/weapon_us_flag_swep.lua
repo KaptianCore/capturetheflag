@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 SWEP.Base         = "weapon_base"
-SWEP.PrintName    = "US Flag SWEP"
+SWEP.PrintName    = "Taliban Flag SWEP"
 SWEP.Category     = "Other"
 SWEP.Author       = "Kaptian Core"
 SWEP.Contact      = ""
@@ -31,10 +31,10 @@ SWEP.Base = "weapon_base"
 
 SWEP.ViewModelFOV  = 43
 SWEP.VElements = {
-	["flag"] = { type = "Model", model = "models/ctf/ctf_flag.mdl", bone = "ValveBiped.Bip01_Spine4", rel = "", pos = Vector(-80, -71.968, -7.316), angle = Angle(-89.943, 0, 0), size = Vector(0.748, 0.748, 0.748), color = Color(255, 255, 255, 255), surpresslightning = true, material = "", skin = 1, bodygroup = {} }
+	["flag"] = { type = "Model", model = "models/ctf/ctf_flag.mdl", bone = "ValveBiped.Bip01_Spine4", rel = "", pos = Vector(-80, -71.968, -7.316), angle = Angle(-89.943, 0, 0), size = Vector(0.748, 0.748, 0.748), color = Color(255, 255, 255, 255), surpresslightning = true, material = "", skin = 2, bodygroup = {} }
 }
 SWEP.WElements = {
-	["flag"] = { type = "Model", model = "models/ctf/ctf_flag.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(1.917, -5.549, 80), angle = Angle(174.539, 105.589, 0), size = Vector(0.326, 0.326, 0.326), color = Color(255, 255, 255, 255), surpresslightning = true, material = "", skin = 1, bodygroup = {} }
+	["flag"] = { type = "Model", model = "models/ctf/ctf_flag.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(1.917, -5.549, 80), angle = Angle(174.539, 105.589, 0), size = Vector(0.326, 0.326, 0.326), color = Color(255, 255, 255, 255), surpresslightning = true, material = "", skin = 2, bodygroup = {} }
 }
 
 SWEP.ViewModel = Model("")

@@ -1,4 +1,7 @@
 include('sv_capturetheflag.lua')
+util.AddNetworkString("FlagCaptured")
+util.AddNetworkString("FlagDropped")
+util.AddNetworkString("FlagTaken")
 -- local team_ents = {
 -- 	[1] = "us_flag"
 -- 	[2] = "taliban_flag"

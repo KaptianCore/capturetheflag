@@ -3,7 +3,7 @@ ENT.Base                = "base_gmodentity"
 ENT.PrintName           = "Taliban Flag"
 ENT.Author              = "Kaptian Core"
 ENT.Contact             = "github.com/KaptianCore"
-ENT.Category            = "CG CTF"
+ENT.Category            = "Other"
 ENT.Spawnable			= true
 ENT.AdminSpawnable		= true
 

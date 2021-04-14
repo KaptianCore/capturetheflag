@@ -1,8 +1,6 @@
 AddCSLuaFile( "cl_capturetheflag.lua" )
 AddCSLuaFile( "sh_capturetheflag.lua" )
-util.AddNetworkString("FlagCaptured")
-util.AddNetworkString("FlagDropped")
-util.AddNetworkString("FlagTaken")
+
 
 fac_colours = {
 	[0]    = Color(255, 255, 255), -- Neutral :P
@@ -25,6 +23,7 @@ function BroadcastFlagTaken(ply, team, teamid)
 	else
 		net.Broadcast()
 	end
+end
 
 function BroadcastFlagDropped(ply, team, teamid)
 	local msg = {Color(14,98,224 ), "[CTF] ", fac_colours[player_faction], ply:Name(), fac_colours[0], " has dropped the ", fac_colours[2], team, fac_colours[0], " Flag"}
@@ -36,6 +35,7 @@ function BroadcastFlagDropped(ply, team, teamid)
 	else
 		net.Broadcast()
 	end
+end
 
 function BroadcastFlagCaptured(ply, team, teamid)
 	net.Start("FlagCaptured")
@@ -46,12 +46,14 @@ function BroadcastFlagCaptured(ply, team, teamid)
 	else
 		net.Broadcast()
 	end
+end
 
 hook.Add( "PlayerSwitchWeapon", "DisableWeaponSwitch", function( ply, oldWeapon, newWeapon)
 	if(oldWeapon == "weapon_taliban_flag_swep" or "weapon_us_flag_swep") then
 		return false
 	else
 		return true
+	end
 end )
 
 hook.Add("PlayerDeath", "FlagDroppedCheck", function( victim, inflictor, attacker)
@@ -59,4 +61,5 @@ hook.Add("PlayerDeath", "FlagDroppedCheck", function( victim, inflictor, attacke
 		BroadcastFlagDropped(victim, "Taliban", 2)
 	elseif(victim:HasWeapon("weapon_us_flag_swep")) then 
 		BroadcastFlagDropped(victim, "US", 1)
+	end
 end )

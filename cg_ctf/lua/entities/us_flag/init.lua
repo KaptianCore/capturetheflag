@@ -13,11 +13,11 @@ function ENT:SpawnFunction( ply, trace )
 	ent:SetAngles(ply:GetAngles());
 	ent:Spawn()
 	ent:Activate()
-	return ent
 end
 
 function ENT:Initialize()
     self:SetModel("models/ctf/ctf_flag.mdl")
+    self:SetSkin(1)
     self:PhysicsInit(SOLID_VPHYSICS)
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetSolid(SOLID_VPHYSICS)
@@ -33,7 +33,6 @@ local function SendToAll(msg, ply)
     net.Start("SendToAll")
     net.WriteTable(msg)
     net.Broadcast()
-    end
 end
 
 local function SendToOne(msg, ply)
@@ -79,6 +78,7 @@ function ENT:Use(ply)
     elseif(alliance == true and ply:HasWeapon("weapon_taliban_flag_swep") == true) then
         local msg = {Color(14,98,224 ), "[CTF] ", fac_colours[player_faction], ply:Name(), fac_colours[0], " has captured the ", fac_colours[2], "Taliban ", fac_colours[0], "Flag"}
         CaptureFlag(ply, msg)
+    end
 end
     -- else statement
     -- chat message saying you can't take your own flag like how intel does it

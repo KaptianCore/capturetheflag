@@ -63,10 +63,8 @@ function ENT:Use(ply)
         return
     end
 
-    -- local player_faction = GAMEMODE:GetRegiment(ply):GetAbsoluteParent() -- Uncommented until done (since need GM)
-    -- if (GAMEMODE:IsAlly(1, player_faction)) then -- Uncommented until done (since need GM)
-    local alliance = true -- Temp value since can't test without gamemode
-    local player_faction = 103
+    local player_faction = GAMEMODE:GetRegiment(ply):GetAbsoluteParent()
+    local alliance = GAMEMODE:IsAlly(1, player_faction)
     if(alliance == true and ply:HasWeapon("weapon_taliban_flag_swep") == false) then-- check if they are ally then say you can't take your own team's flag!
         local msg = {Color(14,98,224 ), "[CTF] ",fac_colours[0], " You can't take your own team's flag "}
         SendToOne(msg, ply)

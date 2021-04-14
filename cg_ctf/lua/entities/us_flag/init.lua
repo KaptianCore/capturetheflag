@@ -64,19 +64,20 @@ function ENT:Use(ply)
 
     local player_faction = GAMEMODE:GetRegiment(ply):GetAbsoluteParent()
     local alliance = GAMEMODE:IsAlly(1, player_faction)
+    local faction_colour = GAMEMODE:GetColourObject(player_faction)
     if(alliance == true and ply:HasWeapon("weapon_taliban_flag_swep") == false) then-- check if they are ally then say you can't take your own team's flag!
-        local msg = {Color(14,98,224 ), "[CTF] ",fac_colours[0], " You can't take your own team's flag "}
+        local msg = {Color(14,98,224 ), "[CTF] ",Color(255,255,255), " You can't take your own team's flag "}
         SendToOne(msg, ply)
     elseif(alliance == false and usflagTaken == false) then
-        local msg = {Color(14,98,224 ), "[CTF] ", fac_colours[player_faction], ply:Name(), fac_colours[0], " has taken the ", fac_colours[1], "US ", fac_colours[0], "Flag"}
+        local msg = {Color(14,98,224 ), "[CTF] ", faction_colour, ply:Name(), Color(255,255,255), " has taken the ", Color(3, 3, 252), "US ", Color(255,255,255), "Flag"}
         ply:Give("weapon_us_flag_swep")
         ply:SetWeapon("weapon_us_flag_swep")
         SendToAll(msg, ply)
     elseif(alliance == false and usflagTaken == true) then
-        local msg = {Color(14,98,224 ), "[CTF] ", fac_colours[0], " There is no flag to be taken? "}
+        local msg = {Color(14,98,224 ), "[CTF] ", Color(255,255,255), " There is no flag to be taken? "}
         SendToOne(msg, ply)
     elseif(alliance == true and ply:HasWeapon("weapon_taliban_flag_swep") == true) then
-        local msg = {Color(14,98,224 ), "[CTF] ", fac_colours[player_faction], ply:Name(), fac_colours[0], " has captured the ", fac_colours[2], "Taliban ", fac_colours[0], "Flag"}
+        local msg = {Color(14,98,224 ), "[CTF] ", faction_colour, ply:Name(), Color(255,255,255), " has captured the ", Color(252, 3, 3), "Taliban ", Color(255,255,255), "Flag"}
         CaptureFlag(ply, msg)
     end
 end

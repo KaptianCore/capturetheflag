@@ -2,10 +2,7 @@ include('sv_capturetheflag.lua')
 util.AddNetworkString("FlagCaptured")
 util.AddNetworkString("FlagDropped")
 util.AddNetworkString("FlagTaken")
--- local team_ents = {
--- 	[1] = "us_flag"
--- 	[2] = "taliban_flag"
--- }
+
 local function HandleFlagDropped(len, ply)
 	chat.AddText(unpack(net.ReadTable()))
 	if(teamid == 1) then

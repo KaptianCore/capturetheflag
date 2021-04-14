@@ -4,7 +4,7 @@ SWEP.Base         = "weapon_base"
 SWEP.PrintName    = "Taliban Flag SWEP"
 SWEP.Author       = "Kaptian Core"
 ENT.Contact       = "github.com/KaptianCore"
-ENT.Category      = "CG CTF"
+ENT.Category      = "Other"
 SWEP.Instructions = [[]]
 
 SWEP.HoldType = "melee2"

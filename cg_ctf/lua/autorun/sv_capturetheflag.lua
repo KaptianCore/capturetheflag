@@ -1,20 +1,13 @@
 AddCSLuaFile( "cl_capturetheflag.lua" )
 AddCSLuaFile( "sh_capturetheflag.lua" )
-
-
 fac_colours = {
-	[0]    = Color(255, 255, 255), -- Neutral :P
     [1]    = Color(3, 3, 252),     -- US 
     [2]    = Color(252, 3, 3),     -- Taliban
-    [101]  = Color(0, 87, 46),     -- RU
-    [102]  = Color(58,191,244),    -- UN
-    [103]  = Color(227,254,0),     -- PLA
-    [104]  = Color(255,88,0),      -- AUS
 }
--- local player_faction = GAMEMODE:GetRegiment(ply):GetAbsoluteParent() -- Uncommented until done (since need GM)
-local player_faction = 103
+local player_faction = GAMEMODE:GetRegiment(ply):GetAbsoluteParent() 
+local faction_colour = GAMEMODE:GetColourObject(player_faction)
 function BroadcastFlagTaken(ply, team, teamid)
-	local msg = {Color(14,98,224 ), "[CTF] ", fac_colours[player_faction], ply:Name(), fac_colours[0], " has taken the ", fac_colours[2], team, fac_colours[0], "Flag"}
+	local msg = {Color(14,98,224 ), "[CTF] ", faction_colour, ply:Name(), Color(255,255,255), " has taken the ", fac_colours[teamid], team, Color(255,255,255), " Flag"}
 	net.Start("FlagTaken")
 	net.WriteTable(msg)
 	net.WriteInt(teamid, 16)
@@ -26,7 +19,7 @@ function BroadcastFlagTaken(ply, team, teamid)
 end
 
 function BroadcastFlagDropped(ply, team, teamid)
-	local msg = {Color(14,98,224 ), "[CTF] ", fac_colours[player_faction], ply:Name(), fac_colours[0], " has dropped the ", fac_colours[2], team, fac_colours[0], " Flag"}
+	local msg = {Color(14,98,224 ), "[CTF] ", faction_colour, ply:Name(), Color(255,255,255), " has dropped the ", fac_colours[teamid], team, Color(255,255,255), " Flag"}
 	net.Start("FlagDropped")
 	net.WriteTable(msg)
 	net.WriteInt(teamid, 16)

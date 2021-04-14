@@ -1,14 +1,14 @@
 util.AddNetworkString("SendToAll")
 util.AddNetworkString("SendToOne")
 util.AddNetworkString("CaptureFlag")
-AddCSLuaFile("entities/taliban_flag/cl_init.lua")
-AddCSLuaFile("entities/taliban_flag/shared.lua")
-include("entities/taliban_flag/shared.lua")
+AddCSLuaFile("entities/us_flag/cl_init.lua")
+AddCSLuaFile("entities/us_flag/shared.lua")
+include("entities/us_flag/shared.lua")
 
-tflagTaken = false
+usflagTaken = false
 
 function ENT:SpawnFunction( ply, trace )
-    local ent = ents.Create("taliban_flag")
+    local ent = ents.Create("us_flag")
     ent:SetPos(trace.HitPos + trace.HitNormal * 8);
 	ent:SetAngles(ply:GetAngles());
 	ent:Spawn()
@@ -26,36 +26,27 @@ function ENT:Initialize()
         phys:Wake()     
     end
     self:Activate();
-    -- add the options menu thing to it (look at notepad for it ) + team as 1 or 2 and set the skin as 1 or 2 depending on the team
 end
 
 local function SendToAll(msg, ply)
-    tflagTaken = true
+    usflagTaken = true
     net.Start("SendToAll")
     net.WriteTable(msg)
-    if ply then 
-        net.Send(ply)
-    else
-        net.Broadcast()
+    net.Broadcast()
     end
 end
 
 local function SendToOne(msg, ply)
-    tflagTaken = true
-    net.Start("tflagTaken")
+    usflagTaken = true
+    net.Start("usflagTaken")
     net.WriteTable(msg)
-    if ply then 
-        net.Send(ply)
-    else
-        net.Broadcast()
-    end
+    net.Send(ply)
 end
 
 local function CaptureFlag(ply, msg)
-    -- strip the swep from them and re enable the body group for the opposite side entity.will do the body group via networking
     ply:SelectWeapon("weapon_empty_hands")
-    ply:StripWeapon("weapon_us_flag_swep")
-    local team = 1
+    ply:StripWeapon("weapon_taliban_flag_swep")
+    local team = 2
     net.Start("CaptureFlag")
     net.WriteTable(msg)
     net.WriteInt(team, 16)
@@ -76,19 +67,19 @@ function ENT:Use(ply)
     -- if (GAMEMODE:IsAlly(1, player_faction)) then -- Uncommented until done (since need GM)
     local alliance = true -- Temp value since can't test without gamemode
     local player_faction = 103
-    if(alliance == true and ply:HasWeapon("weapon_us_flag_swep") == false) then-- check if they are ally then say you can't take your own team's flag!
+    if(alliance == true and ply:HasWeapon("weapon_taliban_flag_swep") == false) then-- check if they are ally then say you can't take your own team's flag!
         local msg = {Color(14,98,224 ), "[CTF] ",fac_colours[0], " You can't take your own team's flag "}
         SendToOne(msg, ply)
-    elseif(alliance == false and tflagTaken == false) then
-        local msg = {Color(14,98,224 ), "[CTF] ", fac_colours[player_faction], ply:Name(), fac_colours[0], " has taken the ", fac_colours[2], "Taliban ", fac_colours[0], "Flag"}
-        ply:Give("weapon_taliban_flag_swep")
-        ply:SetWeapon("weapon_taliban_flag_swep")
+    elseif(alliance == false and usflagTaken == false) then
+        local msg = {Color(14,98,224 ), "[CTF] ", fac_colours[player_faction], ply:Name(), fac_colours[0], " has taken the ", fac_colours[1], "US ", fac_colours[0], "Flag"}
+        ply:Give("weapon_us_flag_swep")
+        ply:SetWeapon("weapon_us_flag_swep")
         SendToAll(msg, ply)
-    elseif(alliance == false and tflagTaken == true) then
-        local msg = {Color(14,98,224 ), "[CTF] ",fac_colours[0], " There is no flag to be taken? "}
+    elseif(alliance == false and usflagTaken == true) then
+        local msg = {Color(14,98,224 ), "[CTF] ", fac_colours[0], " There is no flag to be taken? "}
         SendToOne(msg, ply)
-    elseif(alliance == true and ply:HasWeapon("weapon_us_flag_swep") == true) then
-        local msg = {Color(14,98,224 ), "[CTF] ", fac_colours[player_faction], ply:Name(), fac_colours[0], " has captured the ", fac_colours[1], "US ", fac_colours[0], "Flag"}
+    elseif(alliance == true and ply:HasWeapon("weapon_taliban_flag_swep") == true) then
+        local msg = {Color(14,98,224 ), "[CTF] ", fac_colours[player_faction], ply:Name(), fac_colours[0], " has captured the ", fac_colours[2], "Taliban ", fac_colours[0], "Flag"}
         CaptureFlag(ply, msg)
 end
     -- else statement

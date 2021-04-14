@@ -1,6 +1,6 @@
 ENT.Type                = "anim"
 ENT.Base                = "base_gmodentity"
-ENT.PrintName           = "Taliban Flag"
+ENT.PrintName           = "US Flag"
 ENT.Author              = "Kaptian Core"
 ENT.Contact             = "github.com/KaptianCore"
 ENT.Category            = "CG CTF"

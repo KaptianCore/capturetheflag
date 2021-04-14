@@ -2,7 +2,7 @@ AddCSLuaFile( "cl_capturetheflag.lua" )
 AddCSLuaFile( "sh_capturetheflag.lua" )
 util.AddNetworkString("FlagCaptured")
 util.AddNetworkString("FlagDropped")
-util.AddNetworkString("FlagPickedUp")
+util.AddNetworkString("FlagTaken")
 
 fac_colours = {
 	[0]    = Color(255, 255, 255), -- Neutral :P
@@ -19,6 +19,7 @@ function BroadcastFlagTaken(ply, team, teamid)
 	local msg = {Color(14,98,224 ), "[CTF] ", fac_colours[player_faction], ply:Name(), fac_colours[0], " has taken the ", fac_colours[2], team, fac_colours[0], "Flag"}
 	net.Start("FlagTaken")
 	net.WriteTable(msg)
+	net.WriteInt(teamid, 16)
 	if ply then 
 		net.Send(ply)
 	else
@@ -39,6 +40,7 @@ function BroadcastFlagDropped(ply, team, teamid)
 function BroadcastFlagCaptured(ply, team, teamid)
 	net.Start("FlagCaptured")
 	net.WriteTable(msg)
+	net.WriteInt(teamid, 16)
 	if ply then 
 		net.Send(ply)
 	else

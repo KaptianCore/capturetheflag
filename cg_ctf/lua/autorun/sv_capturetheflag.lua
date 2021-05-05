@@ -1,5 +1,4 @@
 AddCSLuaFile( "cl_capturetheflag.lua" )
-AddCSLuaFile( "sh_capturetheflag.lua" )
 fac_colours = {
     [1]    = Color(3, 3, 252),     -- US 
     [2]    = Color(252, 3, 3),     -- Taliban
@@ -40,19 +39,23 @@ function BroadcastFlagCaptured(ply, team, teamid)
 		net.Broadcast()
 	end
 end
-
+local tblFlagWeapons = {
+	["weapon_taliban_flag_swep"] = true,
+	["weapon_us_flag_swep"] = true,
+}
 hook.Add( "PlayerSwitchWeapon", "DisableWeaponSwitch", function( ply, oldWeapon, newWeapon)
-	if(oldWeapon == "weapon_taliban_flag_swep" or "weapon_us_flag_swep") then
+	if tblFlagWeapons[oldWeapon] then
 		return false
-	else
-		return true
 	end
+	return true
 end )
 
-hook.Add("PlayerDeath", "FlagDroppedCheck", function( victim, inflictor, attacker)
+hook.Add( "PlayerDeath", "FlagDroppedCheck", function( victim, inflictor, attacker)
 	if(victim:HasWeapon("weapon_taliban_flag_swep")) then 
 		BroadcastFlagDropped(victim, "Taliban", 2)
 	elseif(victim:HasWeapon("weapon_us_flag_swep")) then 
 		BroadcastFlagDropped(victim, "US", 1)
+	else
+		return
 	end
 end )

@@ -1,13 +1,13 @@
-include('sv_capturetheflag.lua')
+include("sv_capturetheflag.lua")
 util.AddNetworkString("FlagCaptured")
 util.AddNetworkString("FlagDropped")
 util.AddNetworkString("FlagTaken")
 
 local function HandleFlagDropped(len, ply)
 	chat.AddText(unpack(net.ReadTable()))
-	if(teamid == 1) then
+	if (teamid == 1) then
 		usflagTaken = false
-	elseif(teamid == 2) then
+	elseif (teamid == 2) then
 		tflagTaken = false
 	end
 	-- local team_flag = ents.FindByName(team_ents[net.ReadInt(16)]) 	
@@ -18,23 +18,20 @@ net.Receive("FlagDropped", HandleFlagDropped)
 
 local function HandleFlagTaken(len, ply)
 	chat.AddText(unpack(net.ReadTable()))
-	if(teamid == 1) then
+	if (teamid == 1) then
 		usflagTaken = true
-	elseif(teamid == 2) then
+	elseif (teamid == 2) then
 		tflagTaken = true
 	end
-	-- local team_flag = ents.FindByName(team_ents[net.ReadInt(16)])
-	-- Disable Body Group For Team's Flag
-    -- team_flag:SetBodygroup(0, 1) -- may have to set it to 0 idk	 	
 end
 net.Receive("FlagTaken", HandleFlagTaken)
 
 local function HandleFlagCaptured(len, ply)
 	chat.AddText(unpack(net.ReadTable()))
 	local teamid = net.ReadInt(16)
-	if(teamid == 1) then
+	if (teamid == 1) then
 		usflagTaken = false
-	elseif(teamid == 2) then
+	elseif (teamid == 2) then
 		tflagTaken = false
 	end
 	-- local team_flag = ents.FindByName(team_ents[net.ReadInt(16)])

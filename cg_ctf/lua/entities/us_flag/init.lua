@@ -79,7 +79,7 @@ function ENT:Use(ply)
             CaptureFlag(ply, tblMessages[4])
         end
       else -- if not alliance
-        if not tFlagTaken then
+        if not usFlagTaken then
             ply:Give("weapon_us_flag_swep")
             ply:SetWeapon("weapon_us_flag_swep")
             SendToAll(tblMessages[2], ply)

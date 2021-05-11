@@ -9,8 +9,8 @@ tflagTaken = false
 local tblMessages = {
     [1] = {Color(14,98,224 ), "[CTF] ", Color(255,255,255), " You can't take your own team's flag "},
     [2] = {Color(14,98,224 ), "[CTF] ", faction_colour, ply:Name(), Color(255,255,255), " has taken the ", Color(252, 3, 3), "Taliban ", Color(255,255,255), "Flag"},
-    [3] = {Color(14,98,224 ), "[CTF] ", Color(255,255,255), " There is no flag to be taken? "}
-    [4] = {Color(14,98,224 ), "[CTF] ", faction_colour, ply:Name(), Color(255,255,255), " has captured the ", Color(3, 3, 252), "US ", Color(255,255,255), "Flag"}
+    [3] = {Color(14,98,224 ), "[CTF] ", Color(255,255,255), " There is no flag to be taken? "},
+    [4] = {Color(14,98,224 ), "[CTF] ", faction_colour, ply:Name(), Color(255,255,255), " has captured the ", Color(3, 3, 252), "US ", Color(255,255,255), "Flag"},
 }
 
 function ENT:SpawnFunction( ply, trace )

@@ -7,6 +7,13 @@ include("entities/us_flag/shared.lua")
 
 usflagTaken = false
 
+local tblMessages = {
+    [1] = {Color(14,98,224 ), "[CTF] ", Color(255,255,255), " You can't take your own team's flag "},
+    [2] = {Color(14,98,224 ), "[CTF] ", faction_colour, ply:Name(), Color(255,255,255), " has taken the ", Color(3, 3, 252), "US ", Color(255,255,255), "Flag"},
+    [3] = {Color(14,98,224 ), "[CTF] ", Color(255,255,255), " There is no flag to be taken? "}
+    [4] = {Color(14,98,224 ), "[CTF] ", faction_colour, ply:Name(), Color(255,255,255), " has captured the ", Color(252, 3, 3), "Taliban ", Color(255,255,255), "Flag"}
+}
+
 function ENT:SpawnFunction( ply, trace )
   local ent = ents.Create("us_flag")
   ent:SetPos(trace.HitPos + trace.HitNormal * 8);
@@ -49,7 +56,7 @@ local function CaptureFlag(ply, msg)
     net.Start("CaptureFlag")
     net.WriteTable(msg)
     net.WriteInt(team, 16)
-    if ply then 
+    if IsValid(ply) and ply:IsPlayer() then
         net.Send(ply)
     else
         net.Broadcast()
@@ -65,24 +72,19 @@ function ENT:Use(ply)
     local player_faction = GAMEMODE:GetRegiment(ply):GetAbsoluteParent()
     local alliance = GAMEMODE:IsAlly(1, player_faction)
     local faction_colour = GAMEMODE:GetColourObject(player_faction)
-    if (alliance == true and ply:HasWeapon("weapon_taliban_flag_swep") == false) then-- check if they are ally then say you can't take your own team's flag!
-        local msg = {Color(14,98,224 ), "[CTF] ",Color(255,255,255), " You can't take your own team's flag "}
-        SendToOne(msg, ply)
-    elseif (alliance == false and usflagTaken == false) then
-        local msg = {Color(14,98,224 ), "[CTF] ", faction_colour, ply:Name(), Color(255,255,255), " has taken the ", Color(3, 3, 252), "US ", Color(255,255,255), "Flag"}
-        ply:Give("weapon_us_flag_swep")
-        ply:SetWeapon("weapon_us_flag_swep")
-        SendToAll(msg, ply)
-    elseif (alliance == false and usflagTaken == true) then
-        local msg = {Color(14,98,224 ), "[CTF] ", Color(255,255,255), " There is no flag to be taken? "}
-        SendToOne(msg, ply)
-    elseif (alliance == true and ply:HasWeapon("weapon_taliban_flag_swep") == true) then
-        local msg = {Color(14,98,224 ), "[CTF] ", faction_colour, ply:Name(), Color(255,255,255), " has captured the ", Color(252, 3, 3), "Taliban ", Color(255,255,255), "Flag"}
-        CaptureFlag(ply, msg)
-    end
+    if alliance then
+        if not ply:HasWeapon("weapon_taliban_flag_swep") then
+            SendToOne(tblMessages[1], ply)
+        else -- ply does have weapon
+            CaptureFlag(ply, tblMessages[4])
+        end
+      else -- if not alliance
+        if not tFlagTaken then
+            ply:Give("weapon_us_flag_swep")
+            ply:SetWeapon("weapon_us_flag_swep")
+            SendToAll(tblMessages[2], ply)
+        else
+            SendToOne(tblMessages[3], ply)
+        end
+      end
 end
-    -- else statement
-    -- chat message saying you can't take your own flag like how intel does it
-    -- this is where the swep will be given as well as checks to see they are either allied to the team, also checking its a player, defining the player that HasFlag or I can just check when they are returning if they have the enemy swep
-    -- change body group of the entity, give the swep to ply, also announce the person has taken the team's flag 
-    -- The ent use is too generic so will split it up here, will need to add checks like if its the first take and all that in the main func then here will do the body group and chat message
